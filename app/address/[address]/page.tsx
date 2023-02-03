@@ -15,7 +15,9 @@ const settings: AlchemySettings = {
 
 const alchemy = new Alchemy(settings)
 
-async function getAddressBalance(address: string) {
+type getAddressBalance = (address: string) => Promise<string>
+
+const getAddressBalance: getAddressBalance = async (address: string) => {
     const balanceInWei = await alchemy.core.getBalance(address)
     const balance = await ethers.utils.formatEther(balanceInWei)
     return balance
@@ -51,7 +53,7 @@ const Address = async ({ params }: any) => {
 
     return (
         <main className="flex h-screen flex-col items-center bg-slate-100">
-            <div className="w-11/12 border-b py-4 pl-4  ">
+            <div className="w-10/12 border-b py-4 pl-4  ">
                 <span className="text-xl">Address: </span>
                 {params.address}
             </div>

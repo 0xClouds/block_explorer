@@ -1,9 +1,11 @@
 import SearchBar from "@/components/SearchBar"
+import BlockchainInfo from "@/components/BlockchainInfo"
 
 const Home = async () => {
     return (
-        <div>
+        <div className="h-screen w-screen bg-slate-100">
             <SearchBar />
+            <BlockchainInfo />
         </div>
     )
 }

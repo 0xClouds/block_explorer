@@ -7,13 +7,15 @@ import { useState } from "react"
 const SearchBar = () => {
     const [address, setAddress] = useState<string>("")
 
-    const handleSearch = () => {}
     return (
-        <div>
-            <h1>The Ethereum Blockchain Explorer</h1>
+        <div className="flex h-1/5 flex-col justify-center bg-blue-800 p-4">
+            <h1 className="pb-4 text-2xl text-white">
+                The Ethereum Blockchain Explorer
+            </h1>
+
             <form>
                 <input
-                    className="h-10 w-9/12"
+                    className="h-10 w-6/12 rounded-l-lg indent-3 focus-visible:outline-0 "
                     placeholder="Enter Address Here..."
                     type="text"
                     value={address}
@@ -21,6 +23,7 @@ const SearchBar = () => {
                         setAddress(e.target.value)
                     }}
                 ></input>
+
                 <Link href={`/address/${address}`}>
                     <button
                         type="submit"
@@ -33,6 +36,10 @@ const SearchBar = () => {
                     </button>
                 </Link>
             </form>
+            <p className="mt-2 text-xs text-slate-300">
+                The blockchain explorer with the least features! Search an
+                address, browse tx receipts, or investigate blocks!{" "}
+            </p>
         </div>
     )
 }

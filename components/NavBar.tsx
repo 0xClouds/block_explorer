@@ -4,7 +4,7 @@ import { FC } from "react"
 
 const NavBar: FC = () => {
     return (
-        <nav className=" flex h-12  w-screen items-center  justify-between border-b-2 border-blue-200 py-8">
+        <nav className=" flex h-12  w-screen items-center  justify-between border-b-2 border-blue-200 ">
             <Link href="/">
                 <div className="ml-40 flex flex-row items-center">
                     <div className="relative mx-2 h-10 w-10 rounded-full border-4 border-solid border-blue-200">
