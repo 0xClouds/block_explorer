@@ -10,7 +10,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html>
+        <html className="w-full">
             <head></head>
             <body>
                 <NavBar />

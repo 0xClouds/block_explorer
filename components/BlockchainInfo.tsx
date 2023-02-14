@@ -1,12 +1,6 @@
-import {
-    Network,
-    Alchemy,
-    AlchemySettings,
-    AssetTransfersParams,
-    AssetTransfersCategory,
-} from "alchemy-sdk"
+import { Network, Alchemy, AlchemySettings } from "alchemy-sdk"
 import Link from "next/link"
-import { FC } from "react"
+import BlockOverview from "./BlockOverview"
 
 const settings: AlchemySettings = {
     apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
@@ -20,7 +14,7 @@ type getBlockNumber = () => Promise<number[]>
 const getBlockNum: getBlockNumber = async () => {
     let blockNumbers = []
     let blockNum = await alchemy.core.getBlockNumber()
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
         blockNumbers.push(blockNum--)
     }
     console.log(blockNumbers)
@@ -30,24 +24,32 @@ const getBlockNum: getBlockNumber = async () => {
 const BlockchainInfo = async () => {
     const blockNum = await getBlockNum()
     return (
-        <div className="flex h-full w-full justify-evenly ">
-            <div className="mt-8 flex h-2/4 w-5/12 flex-col divide-y-2 rounded-lg bg-white shadow-lg  [&>div]:border-b ">
-                <div className="text-bold">Latest Blocks</div>
-                <div className="w-full">
+        <div className="flex h-full w-full justify-evenly">
+            <div className="mt-8 flex h-fit w-5/12 flex-col divide-y-2 rounded-lg bg-white shadow-lg ">
+                <div className="text-bold h-14 p-4">Latest Blocks</div>
+                <div className=" w-full">
                     {blockNum.map((num) => {
                         return (
-                            <div className="flex w-full  border-b">
-                                <div className="m-2 flex items-center">
+                            <div
+                                className="flex h-20 w-full border-b"
+                                key={num}
+                            >
+                                <div className="m-2 flex items-center gap-2">
                                     <div className="rounded-lg bg-slate-100 p-3 text-center text-sm">
                                         Bk
                                     </div>
-                                    <Link
-                                        className="text-blue-500 hover:text-blue-700"
-                                        href={`/block/${num}`}
-                                    >
-                                        {num}
-                                    </Link>
+                                    <div className="flex flex-col">
+                                        <Link
+                                            className="text-blue-500 hover:text-blue-700"
+                                            href={`/block/${num}`}
+                                        >
+                                            {num}
+                                        </Link>
+                                        <div className="text-xs">Some Time</div>
+                                    </div>
                                 </div>
+                                {/* @ts-expect-error Server Component */}
+                                <BlockOverview blockNum={num}></BlockOverview>
                             </div>
                         )
                     })}

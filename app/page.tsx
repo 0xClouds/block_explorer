@@ -4,7 +4,10 @@ import BlockchainInfo from "@/components/BlockchainInfo"
 const Home = async () => {
     return (
         <div className="h-screen w-screen bg-slate-100">
-            <SearchBar />
+            <div>
+                <SearchBar />
+            </div>
+            {/* @ts-expect-error Server Component */}
             <BlockchainInfo />
         </div>
     )
