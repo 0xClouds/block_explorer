@@ -1,19 +1,7 @@
 import Link from "next/link"
-import {
-    Network,
-    Alchemy,
-    AlchemySettings,
-    AssetTransfersParams,
-    AssetTransfersCategory,
-} from "alchemy-sdk"
+import { alchemy } from "../../../alchemy"
+import { AssetTransfersCategory } from "alchemy-sdk"
 import { ethers } from "ethers"
-
-const settings: AlchemySettings = {
-    apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-    network: Network.ETH_MAINNET,
-}
-
-const alchemy = new Alchemy(settings)
 
 type getAddressBalance = (address: string) => Promise<string>
 
@@ -49,16 +37,15 @@ const Address = async ({ params }: any) => {
     const balance = await getAddressBalance(params.address)
     const Transactions = await getTotalTransactions(params.address)
     const Transfers = await getAssetTransfers(params.address)
-    console.log(params.address)
 
     return (
-        <main className="flex h-screen flex-col items-center bg-slate-100">
-            <div className="w-10/12 border-b py-4 pl-4  ">
+        <main className="flex h-screen flex-col items-center bg-slate-100 px-32">
+            <div className="w-full border-b py-4 pl-4  ">
                 <span className="text-xl">Address: </span>
                 {params.address}
             </div>
 
-            <div className="mt-4 flex w-10/12 flex-row justify-between">
+            <div className="mt-4 flex w-full flex-row justify-between">
                 <div className="w-5/12 divide-y rounded-lg bg-white text-sm shadow-lg [&>div]:p-3">
                     <div>Overview</div>
                     <div>Balance: {balance.slice(0, 6)} Ether</div>
@@ -68,10 +55,12 @@ const Address = async ({ params }: any) => {
                     <div className="border-b">More info:</div>
                 </div>
             </div>
+
             {/* 
             This is the table section, to be honest this could be turned into its own component.
             */}
-            <div className="mt-8 flex h-4/6 w-10/12 flex-col items-center overflow-scroll rounded-lg bg-white shadow-lg">
+
+            <div className="mt-8 flex h-4/6 w-full  flex-col items-center overflow-scroll rounded-lg bg-white shadow-lg">
                 <div className="w-full border-b p-4">Transactions</div>
                 <div className="w-full p-4 text-sm text-slate-400">
                     <p>
@@ -79,7 +68,7 @@ const Address = async ({ params }: any) => {
                         {Transfers.length} transactions
                     </p>
                 </div>
-                <table className=" w-[98%]">
+                <table className="w-[98%]">
                     <thead className="  border-b bg-slate-100 text-left">
                         <tr className="[&>th]:p-3">
                             <th scope="col">Txn Hash</th>

@@ -1,33 +1,27 @@
-import { Network, Alchemy, AlchemySettings } from "alchemy-sdk"
 import Link from "next/link"
+import { alchemy } from "../alchemy"
 import BlockOverview from "./BlockOverview"
-
-const settings: AlchemySettings = {
-    apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-    network: Network.ETH_MAINNET,
-}
-
-const alchemy = new Alchemy(settings)
+import BlockReward from "./BlockReward"
 
 type getBlockNumber = () => Promise<number[]>
 
 const getBlockNum: getBlockNumber = async () => {
     let blockNumbers = []
     let blockNum = await alchemy.core.getBlockNumber()
-    for (let i = 0; i < 6; i++) {
+    while (blockNumbers.length < 6) {
         blockNumbers.push(blockNum--)
     }
-    console.log(blockNumbers)
+
     return blockNumbers
 }
 
 const BlockchainInfo = async () => {
     const blockNum = await getBlockNum()
     return (
-        <div className="flex h-full w-full justify-evenly">
-            <div className="mt-8 flex h-fit w-5/12 flex-col divide-y-2 rounded-lg bg-white shadow-lg ">
-                <div className="text-bold h-14 p-4">Latest Blocks</div>
-                <div className=" w-full">
+        <div className="mt-8 flex  w-full justify-between px-32">
+            <div className="mr-2 flex h-fit w-full flex-col divide-y-2 rounded-lg bg-white shadow-lg ">
+                <div className="h-14 p-4 font-bold">Latest Blocks</div>
+                <div className="w-full">
                     {blockNum.map((num) => {
                         return (
                             <div
@@ -50,12 +44,14 @@ const BlockchainInfo = async () => {
                                 </div>
                                 {/* @ts-expect-error Server Component */}
                                 <BlockOverview blockNum={num}></BlockOverview>
+                                {/* @ts-expect-error Server Component */}
+                                <BlockReward> </BlockReward>
                             </div>
                         )
                     })}
                 </div>
             </div>
-            <div className="lg mt-8 flex h-2/4 w-5/12 flex-col divide-y-2 rounded bg-white shadow-lg ">
+            <div className="ml-2 flex h-fit w-full flex-col divide-y-2 rounded bg-white shadow-lg ">
                 <div className=""> Latest Blocks</div>
             </div>
         </div>

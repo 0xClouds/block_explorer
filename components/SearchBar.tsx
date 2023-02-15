@@ -8,7 +8,7 @@ const SearchBar = () => {
     const [address, setAddress] = useState<string>("")
 
     return (
-        <div className="flex h-1/5 flex-col justify-center bg-blue-800 p-4">
+        <div className="flex h-1/5 flex-col justify-center bg-blue-800 py-4 px-32">
             <h1 className="pb-4 text-2xl text-white">
                 The Ethereum Blockchain Explorer
             </h1>

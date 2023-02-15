@@ -4,10 +4,10 @@ import { FC } from "react"
 
 const NavBar: FC = () => {
     return (
-        <nav className=" flex h-12  w-screen items-center  justify-between border-b-2 border-blue-200 ">
+        <nav className="flex h-12 w-screen  items-center justify-between  border-b-2 border-blue-200 py-4 px-32">
             <Link href="/">
-                <div className="ml-40 flex flex-row items-center">
-                    <div className="relative mx-2 h-10 w-10 rounded-full border-4 border-solid border-blue-200">
+                <div className=" flex flex-row items-center">
+                    <div className="relative h-10 w-10 rounded-full border-4 border-solid border-blue-200">
                         <Image
                             className="rounded-full"
                             src="/images/cloud.png"
@@ -21,7 +21,7 @@ const NavBar: FC = () => {
                 </div>
             </Link>
 
-            <div className=" mr-40 flex list-none text-sm [&>a]:mr-10">
+            <div className="  flex list-none text-sm [&>a]:mr-10">
                 <Link href="/" className="hover:text-blue-300">
                     Home
                 </Link>

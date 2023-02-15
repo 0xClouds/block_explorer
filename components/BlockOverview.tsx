@@ -1,12 +1,5 @@
-import { Network, Alchemy, AlchemySettings } from "alchemy-sdk"
+import { alchemy } from "../alchemy"
 import Link from "next/link"
-
-const settings: AlchemySettings = {
-    apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-    network: Network.ETH_MAINNET,
-}
-
-const alchemy = new Alchemy(settings)
 
 const getBlockInfo = async (blockNum: number) => {
     const block = await alchemy.core.getBlock(blockNum)
