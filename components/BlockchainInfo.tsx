@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { alchemy } from "../alchemy"
 import BlockOverview from "./BlockOverview"
-import BlockReward from "./BlockReward"
+import BlockReward from "../app/components/BlockReward"
 
 type getBlockNumber = () => Promise<number[]>
 
@@ -45,7 +45,7 @@ const BlockchainInfo = async () => {
                                 {/* @ts-expect-error Server Component */}
                                 <BlockOverview blockNum={num}></BlockOverview>
                                 {/* @ts-expect-error Server Component */}
-                                <BlockReward> </BlockReward>
+                                <BlockReward blockNum={num}> </BlockReward>
                             </div>
                         )
                     })}

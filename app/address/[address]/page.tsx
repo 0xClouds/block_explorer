@@ -1,13 +1,10 @@
 import Link from "next/link"
 import { alchemy } from "../../../alchemy"
-import { AssetTransfersCategory } from "alchemy-sdk"
-import { ethers } from "ethers"
+import { AssetTransfersCategory, Utils } from "alchemy-sdk"
 
-type getAddressBalance = (address: string) => Promise<string>
-
-const getAddressBalance: getAddressBalance = async (address: string) => {
+const getAddressBalance = async (address: string) => {
     const balanceInWei = await alchemy.core.getBalance(address)
-    const balance = await ethers.utils.formatEther(balanceInWei)
+    const balance = Utils.formatEther(balanceInWei)
     return balance
 }
 
@@ -39,7 +36,7 @@ const Address = async ({ params }: any) => {
     const Transfers = await getAssetTransfers(params.address)
 
     return (
-        <main className="flex h-screen flex-col items-center bg-slate-100 px-32">
+        <div className="flex h-screen flex-col items-center bg-slate-100 px-32">
             <div className="w-full border-b py-4 pl-4  ">
                 <span className="text-xl">Address: </span>
                 {params.address}
@@ -56,7 +53,7 @@ const Address = async ({ params }: any) => {
                 </div>
             </div>
 
-            {/* 
+            {/*
             This is the table section, to be honest this could be turned into its own component.
             */}
 
@@ -117,7 +114,7 @@ const Address = async ({ params }: any) => {
                     })}
                 </table>
             </div>
-        </main>
+        </div>
     )
 }
 
