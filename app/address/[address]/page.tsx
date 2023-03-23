@@ -36,7 +36,7 @@ const Address = async ({ params }: any) => {
     const Transfers = await getAssetTransfers(params.address)
 
     return (
-        <div className="flex h-screen flex-col items-center bg-slate-100 px-32">
+        <div className="flex h-screen flex-col items-center bg-slate-100 px-44">
             <div className="w-full border-b py-4 pl-4  ">
                 <span className="text-xl">Address: </span>
                 {params.address}

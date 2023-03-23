@@ -1,59 +1,40 @@
-import Link from "next/link"
 import { alchemy } from "../alchemy"
-import BlockOverview from "./BlockOverview"
-import BlockReward from "../app/components/BlockReward"
-
+import LatestBlocks from "./LatestBlocks"
+import LatestTransactions from "./LatestTransactions"
 type getBlockNumber = () => Promise<number[]>
 
 const getBlockNum: getBlockNumber = async () => {
     let blockNumbers = []
-    let blockNum = await alchemy.core.getBlockNumber()
-    while (blockNumbers.length < 6) {
+    let blockNum = (await alchemy.core.getBlockNumber()) - 2
+    while (blockNumbers.length < 5) {
         blockNumbers.push(blockNum--)
     }
 
     return blockNumbers
 }
 
+const getTransactions = async () => {
+    let blockNum = await getBlockNum()
+    const blockTransactions = await alchemy.core.getBlockWithTransactions(
+        blockNum[0]
+    )
+    const allTransactions = blockTransactions.transactions
+    const latestTransactions = allTransactions.slice(
+        allTransactions.length - 6,
+        allTransactions.length - 1
+    )
+    return latestTransactions
+}
+
 const BlockchainInfo = async () => {
-    const blockNum = await getBlockNum()
+    const blockNum: number[] = await getBlockNum()
+    const txs = await getTransactions()
     return (
-        <div className="mt-8 flex  w-full justify-between px-32">
-            <div className="mr-2 flex h-fit w-full flex-col divide-y-2 rounded-lg bg-white shadow-lg ">
-                <div className="h-14 p-4 font-bold">Latest Blocks</div>
-                <div className="w-full">
-                    {blockNum.map((num) => {
-                        return (
-                            <div
-                                className="flex h-20 w-full border-b"
-                                key={num}
-                            >
-                                <div className="m-2 flex items-center gap-2">
-                                    <div className="rounded-lg bg-slate-100 p-3 text-center text-sm">
-                                        Bk
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <Link
-                                            className="text-blue-500 hover:text-blue-700"
-                                            href={`/block/${num}`}
-                                        >
-                                            {num}
-                                        </Link>
-                                        <div className="text-xs">Some Time</div>
-                                    </div>
-                                </div>
-                                {/* @ts-expect-error Server Component */}
-                                <BlockOverview blockNum={num}></BlockOverview>
-                                {/* @ts-expect-error Server Component */}
-                                <BlockReward blockNum={num}> </BlockReward>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
-            <div className="ml-2 flex h-fit w-full flex-col divide-y-2 rounded bg-white shadow-lg ">
-                <div className=""> Latest Blocks</div>
-            </div>
+        <div className="mt-8 flex  w-full justify-between px-44">
+            {/* @ts-expect-error Server Component */}
+            <LatestBlocks blockNum={blockNum}></LatestBlocks>
+            {/* @ts-expect-error Server Component */}
+            <LatestTransactions txs={txs}></LatestTransactions>
         </div>
     )
 }
